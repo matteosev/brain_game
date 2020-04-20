@@ -1,5 +1,5 @@
 # brain_game
-A game to train your mental arithmetic.
+A game to train your mental arithmetic. (only for Linux x86_64)
 
 <h2>Build from source</h2>
 You will need <b>nasm - the netwide assembler</b>.
