@@ -58,6 +58,8 @@ section .data
     noob db " (noob)", 0
     inter db " (intermediate)", 0
     master db " (master)", 0
+    duration_start db "You will have ", 0
+    duration_end db " seconds to answer a maximum of calculations, don't cheat !", 10, "Ready ? (hit any button to start)", 0
 
 section .bss
     inp resq 1
@@ -71,6 +73,7 @@ section .bss
     sup_bound resq 1
     score resq 1
     level_user resb 1
+    duration resq 1
 
 section .text
     global _start 
@@ -109,16 +112,27 @@ section .text
         l_noob:
             mov qword [sup_bound], 10
             mov byte [level_user], 1
+            mov byte [duration], 10
             jmp setup
         l_intermediate:
             mov qword [sup_bound], 20
             mov byte [level_user], 2
+            mov byte [duration], 20
             jmp setup
         l_master:
             mov qword [sup_bound], 50
             mov byte [level_user], 3
+            mov byte [duration], 30
             jmp setup
         setup:
+            print duration_start, 0
+            int_to_str duration, temp
+            print duration, 8
+            str_to_int duration, 2
+            print duration_end, 0
+            input inp, 8
+            mov qword [inp], 0
+            print nl, 1
             mov rax, 201
             mov rdi, start_time
             syscall
@@ -166,7 +180,7 @@ section .text
                 syscall
                 mov rax, [end_time]
                 sub rax, [start_time]
-                cmp rax, 10
+                cmp rax, qword [duration]
                 jle game_loop
 
                 ; if time's up display score with some text
