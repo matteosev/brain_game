@@ -59,7 +59,7 @@ section .data
     inter db " (intermediate)", 0
     master db " (master)", 0
     duration_start db "You will have ", 0
-    duration_end db " seconds to answer a maximum of calculations, don't cheat !", 10, "Ready ? (hit any button to start)", 0
+    duration_end db " seconds to answer a maximum of calculations, don't cheat !", 10, "Ready ? (hit enter to start)", 0
 
 section .bss
     inp resq 1
@@ -112,17 +112,17 @@ section .text
         l_noob:
             mov qword [sup_bound], 10
             mov byte [level_user], 1
-            mov byte [duration], 10
+            mov qword [duration], 10
             jmp setup
         l_intermediate:
             mov qword [sup_bound], 20
             mov byte [level_user], 2
-            mov byte [duration], 20
+            mov qword [duration], 20
             jmp setup
         l_master:
             mov qword [sup_bound], 50
             mov byte [level_user], 3
-            mov byte [duration], 30
+            mov qword [duration], 30
             jmp setup
         setup:
             print duration_start, 0
